@@ -29,8 +29,8 @@
 1. 克隆项目到本地：
 
    ```bash
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone https://github.com/alltobebetter/BoB-Markdown.git
+   cd BoB-Markdown
    ```
 
 2. 安装依赖：
