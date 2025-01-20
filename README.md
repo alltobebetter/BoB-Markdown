@@ -1,4 +1,4 @@
-# BoB Markdown Editor
+# Markbox Markdown Editor
 
 这是一个使用 Vite 构建的 React + TypeScript 项目模板，集成了 Tailwind CSS 和 Lucide React 图标库。
 
