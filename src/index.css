@@ -2,14 +2,82 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary-color: #6366f1;
+  --primary-hover: #4f46e5;
+  --bg-color: #f8fafc;
+  --border-color: #e2e8f0;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+}
+
+/* 全局字体设置 */
+@font-face {
+  font-family: 'Inter';
+  src: url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+}
+
+body {
+  @apply bg-slate-50;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei',
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  letter-spacing: -0.01em;
+}
+
+/* 编辑器特殊字体设置 */
+.editor-container textarea {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei',
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.7;
+  letter-spacing: -0.01em;
+}
+
+/* 预览区域内容字体 */
+.prose {
+  @apply max-w-none text-slate-700;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei',
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.7;
+}
+
+/* 代码字体设置 */
+.prose pre code,
+.prose :not(pre) > code {
+  font-family: 'JetBrains Mono', 'Fira Code', Consolas, Monaco, 'Courier New', Courier, monospace;
+}
+
 .gutter {
-  background-color: #f3f4f6;
+  position: relative;
+  background-color: var(--bg-color);
   background-repeat: no-repeat;
   background-position: 50%;
+  transition: background-color 0.2s;
+  width: 12px;
+  cursor: col-resize;
+}
+
+.gutter::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background-color: var(--border-color);
+  transform: translateX(-50%);
+  transition: background-color 0.2s;
 }
 
 .gutter:hover {
-  background-color: #e5e7eb;
+  background-color: #f1f5f9;
+}
+
+.gutter:hover::after {
+  width: 3px;
+  background-color: var(--primary-color);
 }
 
 .split {
@@ -17,100 +85,169 @@
   flex-direction: row;
 }
 
-/* Custom scrollbar styles */
+/* 工具栏样式 */
+.toolbar-button {
+  @apply p-2 rounded-lg transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-1;
+}
+
+.toolbar-divider {
+  @apply h-6 w-px bg-slate-200;
+}
+
+/* 编辑器和预览区域通用样式 */
+.editor-container, .preview-container {
+  @apply bg-white shadow-sm ring-1 ring-slate-200;
+}
+
+.panel-header {
+  @apply bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between sticky top-0 z-10;
+}
+
+.collapse-button {
+  @apply p-1.5 hover:bg-indigo-50 rounded-lg transition-all duration-200 text-slate-600 hover:text-indigo-600;
+}
+
+.export-button {
+  @apply p-1.5 hover:bg-indigo-50 rounded-lg transition-all duration-200 text-slate-600 hover:text-indigo-600
+         focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-1;
+}
+
+.side-toggle-button {
+  @apply w-[30px] h-[100px] bg-white hover:bg-indigo-50 shadow-lg rounded-lg border border-slate-200
+         flex items-center justify-center transition-all duration-200
+         text-slate-400 hover:text-indigo-600 hover:border-indigo-200;
+}
+
+/* 自定义滚动条 */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f3f4f6;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #d1d5db;
+  background: var(--bg-color);
   border-radius: 4px;
 }
 
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #9ca3af;
+  background: #94a3b8;
 }
 
-/* Typography enhancements */
+/* 代码块容器 */
 .prose pre {
-  background-color: #1e293b !important;
-  color: #e2e8f0 !important;
-  border: 1px solid #334155;
-  border-radius: 0.5rem;
-  padding: 1rem !important;
-  margin: 1.5rem 0 !important;
+  @apply bg-slate-900 text-slate-50 border border-slate-800 rounded-lg shadow-lg relative;
+  margin: 1rem 0 !important;
+  padding: 2.5rem 1rem 1rem !important;
 }
 
-.prose code {
-  background-color: #f1f5f9;
-  color: #0f172a !important;
-  padding: 0.2em 0.4em;
-  border-radius: 0.25rem;
-  font-size: 0.875em;
+/* 代码块顶部栏 */
+.prose pre::before {
+  content: "";
+  @apply absolute top-0 left-0 right-0 h-8 bg-slate-800 border-b border-slate-700 rounded-t-lg;
 }
 
+/* 代码块语言标签 */
+.prose pre .language-tag {
+  @apply absolute top-1.5 left-3 px-2 py-1 text-xs text-slate-400 font-mono;
+}
+
+/* 代码块复制按钮 */
+.prose pre .copy-button {
+  @apply absolute top-1.5 right-3 px-2 py-1 text-xs 
+         bg-slate-700/50 text-slate-300 
+         rounded border border-slate-600
+         hover:bg-slate-700 hover:border-slate-500
+         focus:outline-none focus:ring-2 focus:ring-slate-500
+         transition-all duration-200;
+}
+
+.prose pre .copy-button.copied {
+  @apply bg-green-600/50 text-green-100 border-green-500;
+}
+
+/* 代码块内容 */
 .prose pre code {
-  background-color: transparent !important;
-  color: #e2e8f0 !important;
-  padding: 0;
-  border-radius: 0;
+  @apply bg-transparent text-inherit p-0 text-sm font-mono;
 }
 
+/* 行内代码 */
+.prose :not(pre) > code {
+  @apply bg-slate-100 text-slate-900 px-1.5 py-0.5 rounded text-sm font-medium;
+}
+
+/* 引用样式 */
 .prose blockquote {
-  border-left-color: #818cf8;
-  background-color: #f8fafc;
-  padding: 1rem;
-  border-radius: 0.5rem;
+  @apply border-l-4 border-indigo-400 bg-indigo-50/30 py-1 px-4 my-2 rounded-r-sm text-slate-700;
+}
+
+.prose blockquote p {
+  @apply my-1;
 }
 
 .prose table {
-  border-collapse: collapse;
-  width: 100%;
-  margin: 2rem 0;
-}
-
-.prose table th,
-.prose table td {
-  border: 1px solid #e2e8f0;
-  padding: 0.75rem;
+  @apply w-full border-collapse my-6;
 }
 
 .prose table th {
-  background-color: #f8fafc;
+  @apply bg-slate-50 text-slate-700 border border-slate-200 px-4 py-2;
+}
+
+.prose table td {
+  @apply border border-slate-200 px-4 py-2;
 }
 
 .prose table tr:nth-child(even) {
-  background-color: #f8fafc;
+  @apply bg-slate-50/50;
 }
 
-/* Custom alignment classes */
+/* 自定义对齐样式 */
 .prose :is(.left, .center, .right) {
-  display: block;
-  padding: 1rem;
-  margin: 1rem 0;
-  border-radius: 0.5rem;
-  background-color: #f8fafc;
+  @apply p-4 my-4 rounded-lg bg-slate-50 border border-slate-200;
 }
 
 .prose .center {
-  text-align: center;
+  @apply text-center;
 }
 
 .prose .right {
-  text-align: right;
+  @apply text-right;
 }
 
-/* Task list styles */
+/* 任务列表样式 */
 .prose ul li.task-list-item {
-  list-style-type: none;
-  margin-left: -1.5em;
+  @apply list-none -ml-6;
 }
 
 .prose ul li.task-list-item input[type="checkbox"] {
-  margin-right: 0.5em;
+  @apply mr-2 rounded border-slate-400 text-indigo-600 focus:ring-indigo-500;
+}
+
+/* Logo 图标动效 */
+.logo-icon {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 1px 1px rgb(0 0 0 / 0.05));
+}
+
+.logo-icon:hover {
+  transform: rotate(20deg) scale(1.1);
+  filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) 
+          drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+  color: var(--primary-hover);
+}
+
+/* 社交图标链接样式 */
+.social-icon-link {
+  @apply p-2 rounded-lg text-slate-600 transition-all duration-200
+         hover:bg-indigo-50 hover:text-indigo-600
+         focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:ring-offset-1;
+}
+
+.social-icon-link:hover svg {
+  transform: scale(1.1);
 }
