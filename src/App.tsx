@@ -73,14 +73,14 @@ function App() {
         </div>
         <div className="flex items-center gap-4">
           <a
-            href="mailto:your-email@example.com"
+            href="mailto:me@supage.eu.org"
             className="social-icon-link"
             title="联系我们"
           >
             <Mail className="w-5 h-5" />
           </a>
           <a
-            href="https://github.com/your-username"
+            href="https://github.com/alltobebetter/MarkBox/"
             target="_blank"
             rel="noopener noreferrer"
             className="social-icon-link"
@@ -89,7 +89,7 @@ function App() {
             <Github className="w-5 h-5" />
           </a>
           <a
-            href="https://chat.openai.com"
+            href="https://aibob.click"
             target="_blank"
             rel="noopener noreferrer"
             className="social-icon-link"
